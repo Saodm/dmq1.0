@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班级点名器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #cbebff 50%, #a1dbff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c8ef0;
+            margin-bottom: 20px;
+        }
+        .input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        label {
+            font-size: 18px;
+            color: #333;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #a1dbff;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            background-color: #2c8ef0;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1a73e8;
+        }
+        .result-area {
+            margin-top: 25px;
+            padding: 20px;
+            border: 2px dashed #a1dbff;
+            border-radius: 8px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .result-item {
+            background-color: #f0f9ff;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .empty-tip {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>班级随机点名器</h1>
+        <div class="input-area">
+            <label for="num">请输入点名人数：</label>
+            <input type="number" id="num" min="1" max="68" value="1">
+            <button id="rollBtn">开始点名</button>
+        </div>
+        <div class="result-area" id="resultArea">
+            <div class="empty-tip">点击“开始点名”后，结果将显示在这里</div>
+        </div>
+    </div>
+
+    <script>
+        // 存储所有名字的数组
+        const names = [
+            "刘明哲", "胡可欣", "胡喈",
+            "陈颖", "杨钰诺", "闫楚欣",
+            "田地", "白世博", "郑向阳",
+            "李颖硕", "任凯璐", "王子涵",
+            "张崔毅", "王思淼", "刘一凡",
+            "翟静悦", "毛奕茗", "杜一博",
+            "王浩宇", "李晓磊", "刘岱",
+            "王浩", "韩淑静", "刘小艺", "段玉婷",
+            "杨文卓", "姜启国",
+            "刘雅楠", "胡芮涵", "闫晨鹤", "王子瑞",
+            "张佳雪", "董欣悦", "陈雨", "赵黎明",
+            "马笑晴", "程卓旭", "赵子翔", "韩佩霖",
+            "周柯予", "南一帆", "彭梓菡", "张雪娜",
+            "黄晨静", "丁筱佳", "常晨硕", "汪鑫宇",
+            "赵高立", "赵浩鑫", "闫嘉文", "王炫桦",
+            "施艺然", "刘紫诺", "安宗亚", "袁浩若",
+            "曹家豪", "李阳", "高梓涵",
+            "盛弋朔", "杜锐岩", "马尚",
+            "安俊弈", "程佳琦", "万笑微",
+            "郑一诺", "曾佳一", "宗于颜",
+            "梁梦柯", "田子尧", "洪叶阳",
+            "李怡童", "刘若溪", "侯佳宸",
+            "雷天宇", "张吉祥", "郝仲博",
+            "任锦洋", "马子琦", "马世锦"
+        ];
+
+        const rollBtn = document.getElementById('rollBtn');
+        const numInput = document.getElementById('num');
+        const resultArea = document.getElementById('resultArea');
+
+        rollBtn.addEventListener('click', () => {
+            const num = parseInt(numInput.value);
+            if (isNaN(num) || num <= 0 || num > names.length) {
+                alert('请输入1到' + names.length + '之间的整数');
+                return;
+            }
+
+            // 清空之前的结果
+            resultArea.innerHTML = '';
+
+            // 随机点名
+            for (let i = 0; i < num; i++) {
+                const randomIndex = Math.floor(Math.random() * names.length);
+                const name = names[randomIndex];
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.textContent = `${i + 1}. ${name}`;
+                resultArea.appendChild(resultItem);
+            }
+        });
+    </script>
+</body>
+</html>
